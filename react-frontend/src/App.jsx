@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
-// import fetch from "node-fetch";
-const fetch = require("node-fetch");
 
 function App() {
   const [users, setUsers] = useState([]);
   /* istanbul ignore next */
-  // const hostUrl = import.meta.env.PROD
-  //   ? window.location.href
-  //   : "http://localhost:8080/";
-
-    const hostUrl = "http://localhost:8080/";
+  const hostUrl = import.meta.env.PROD
+    ? window.location.href
+    : "http://localhost:8080/";
   const fetchUsers = async () => {
     const response = await fetch(`${hostUrl}api/users`);
     const usersToJson = await response.json();
@@ -74,7 +70,7 @@ function App() {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Is Admin?</th>
+            <th>Is Admin</th>
             <th>Delete</th>
           </tr>
         </thead>
