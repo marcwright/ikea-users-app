@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+// import fetch from "node-fetch";
+const fetch = require("node-fetch");
 
 function App() {
   const [users, setUsers] = useState([]);
-  const hostUrl = import.meta.env.PROD
-    ? window.location.href
-    : "http://localhost:8080/";
+  /* istanbul ignore next */
+  // const hostUrl = import.meta.env.PROD
+  //   ? window.location.href
+  //   : "http://localhost:8080/";
 
+    const hostUrl = "http://localhost:8080/";
   const fetchUsers = async () => {
     const response = await fetch(`${hostUrl}api/users`);
     const usersToJson = await response.json();
-    console.log(usersToJson);
     setUsers(usersToJson);
   };
   useEffect(() => {
@@ -37,22 +39,24 @@ function App() {
       },
     });
     await fetchUsers();
-  }
+  };
 
   const createUser = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const response = await fetch(`${hostUrl}api/users`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ name: e.target.name.value, isAdmin: e.target.isAdmin.checked  }),
+      body: JSON.stringify({
+        name: e.target.name.value,
+        isAdmin: e.target.isAdmin.checked,
+      }),
     });
     const newUser = await response.json();
 
     setUsers([...users, newUser]);
-  }
-  
+  };
 
   return (
     <>
@@ -61,7 +65,7 @@ function App() {
         <label htmlFor="name">Name</label>
         <input type="text" name="name" id="name" />
         <label htmlFor="isAdmin">Is Admin</label>
-        <input type="checkbox" name="isAdmin"/>
+        <input type="checkbox" name="isAdmin" />
         <input type="submit" />
       </form>
       <br></br>
@@ -70,7 +74,7 @@ function App() {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Is Admin</th>
+            <th>Is Admin?</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -89,7 +93,9 @@ function App() {
                 />
               </td>
               <td>
-                <button data-id={user.id} onClick={deleteUser}>Delete</button>
+                <button data-id={user.id} onClick={deleteUser}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
