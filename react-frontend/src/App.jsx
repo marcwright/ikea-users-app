@@ -70,7 +70,7 @@ function App() {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Is Admin?</th>
+            <th>Is Admin??</th>
             <th>Delete</th>
           </tr>
         </thead>
